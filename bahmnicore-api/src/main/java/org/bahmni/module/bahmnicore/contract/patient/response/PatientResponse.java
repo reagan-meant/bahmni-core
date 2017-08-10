@@ -2,16 +2,19 @@ package org.bahmni.module.bahmnicore.contract.patient.response;
 
 
 
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.map.JsonSerializer;
-import org.codehaus.jackson.map.SerializerProvider;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.map.JsonSerializer;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializerProvider;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.openmrs.api.context.Context;
+import org.springframework.stereotype.Component;
 
 public class PatientResponse {
 
@@ -101,9 +104,9 @@ public class PatientResponse {
     public String getAddressFieldValue() {
         return addressFieldValue;
     }
-
+    
     public void setAddressFieldValue(String addressFieldValue) {
-        this.addressFieldValue = addressFieldValue;
+        this.addressFieldValue = localizeAddressFieldValue(addressFieldValue);
     }
 
     public String getGivenName() {
@@ -207,5 +210,24 @@ public class PatientResponse {
             String formattedDate = dateFormat.format(date);
             gen.writeString(formattedDate);
         }
+    }
+    
+    /**
+     * Localizes the address value of an address field value string.
+     * Eg. {"addressField" : "address.highStreet"} -> {"addressField" : "High Street"}
+     * 
+     * @param addressFieldValue The address field value JSON.
+     * @return The localized address field value JSON.
+     */
+    public static String localizeAddressFieldValue(String addressFieldValue) {
+    	try {
+			HashMap<String, String> map = new ObjectMapper().readValue(addressFieldValue, HashMap.class);
+			for (String addressField : map.keySet()) {
+				String addressValue = Context.getMessageSourceService().getMessage(map.get(addressField));
+				map.put(addressField, addressValue);
+			}
+			addressFieldValue = new ObjectMapper().writeValueAsString(map);
+		} catch (Exception e) {} 
+    	return addressFieldValue;
     }
 }

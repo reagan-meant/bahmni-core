@@ -223,10 +223,12 @@ public class PatientResponse {
     	try {
 			HashMap<String, String> map = new ObjectMapper().readValue(addressFieldValue, HashMap.class);
 			for (String addressField : map.keySet()) {
-				String addressValue = Context.getMessageSourceService().getMessage(map.get(addressField));
-				map.put(addressField, addressValue);
+				String addressValue = map.get(addressField);
+				String l10nAddressValue = Context.getMessageSourceService().getMessage(addressValue);
+				if (!addressValue.equals(l10nAddressValue)) {
+					addressFieldValue = addressFieldValue.replaceAll(addressValue, l10nAddressValue);
+				}
 			}
-			addressFieldValue = new ObjectMapper().writeValueAsString(map);
 		} catch (Exception e) {} 
     	return addressFieldValue;
     }

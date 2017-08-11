@@ -32,9 +32,9 @@ public class PatientResponseTest {
     
     @Test
     public void shouldLocalizeAddressFieldValue() throws Exception {
-      Assert.assertEquals("{\"addressField\":\"Rue Haute\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\":\"address.highStreet\"}"));
-      Assert.assertEquals("{\"addressField\":\"Baker Street\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\":\"Baker Street\"}"));
-      Assert.assertEquals("{\"addressField\":\"Rue Haute\",\"addressField2\":\"Le Cirque d'Oxford\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\":\"address.highStreet\",\"addressField2\":\"address.oxfordCircus\"}"));
+      Assert.assertEquals("{\"addressField\" : \"Rue Haute\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\" : \"address.highStreet\"}"));
+      Assert.assertEquals("{\"addressField\" : \"Baker Street\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\" : \"Baker Street\"}"));
+      Assert.assertEquals("{\"addressField\" : \"Rue Haute\",\"addressField2\" : \"Le Cirque d'Oxford\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\" : \"address.highStreet\",\"addressField2\" : \"address.oxfordCircus\"}"));
       Assert.assertEquals("{\"malformed\"_;\"json", PatientResponse.localizeAddressFieldValue("{\"malformed\"_;\"json"));
       Assert.assertEquals(null, PatientResponse.localizeAddressFieldValue(null));
       Assert.assertEquals("", PatientResponse.localizeAddressFieldValue(""));

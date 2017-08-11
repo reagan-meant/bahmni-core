@@ -28,15 +28,27 @@ public class PatientResponseTest {
         when(Context.getMessageSourceService().getMessage(eq("Baker Street"))).thenReturn("Baker Street");
         when(Context.getMessageSourceService().getMessage(eq("address.highStreet"))).thenReturn("Rue Haute");
         when(Context.getMessageSourceService().getMessage(eq("address.oxfordCircus"))).thenReturn("Le Cirque d'Oxford");
+        
+        when(Context.getMessageSourceService().getMessage(eq("pit.id1"))).thenReturn("Identifiant primaire");
+        when(Context.getMessageSourceService().getMessage(eq("pit.id2"))).thenReturn("Identifiant secondaire");
+        when(Context.getMessageSourceService().getMessage(eq("pit.id3"))).thenReturn("pit.id3");
     }
     
     @Test
-    public void shouldLocalizeAddressFieldValue() throws Exception {
+    public void shouldLocalizeAddressFieldValue() {
       Assert.assertEquals("{\"addressField\" : \"Rue Haute\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\" : \"address.highStreet\"}"));
       Assert.assertEquals("{\"addressField\" : \"Baker Street\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\" : \"Baker Street\"}"));
       Assert.assertEquals("{\"addressField\" : \"Rue Haute\",\"addressField2\" : \"Le Cirque d'Oxford\"}", PatientResponse.localizeAddressFieldValue("{\"addressField\" : \"address.highStreet\",\"addressField2\" : \"address.oxfordCircus\"}"));
       Assert.assertEquals("{\"malformed\"_;\"json", PatientResponse.localizeAddressFieldValue("{\"malformed\"_;\"json"));
       Assert.assertEquals(null, PatientResponse.localizeAddressFieldValue(null));
       Assert.assertEquals("", PatientResponse.localizeAddressFieldValue(""));
+    }
+    
+    @Test
+    public void shouldPatientIdentifierTypes() {
+      Assert.assertEquals("{\"Identifiant primaire\" : \"98765321\", \"Identifiant secondaire\" : \"MRS-1234\", \"pit.id3\" : \"foobar_666777\"}", PatientResponse.localizePatientIdentifierTypes("{\"pit.id1\" : \"98765321\", \"pit.id2\" : \"MRS-1234\", \"pit.id3\" : \"foobar_666777\"}"));
+      Assert.assertEquals("{\"malformed\"_;\"json", PatientResponse.localizePatientIdentifierTypes("{\"malformed\"_;\"json"));
+      Assert.assertEquals(null, PatientResponse.localizePatientIdentifierTypes(null));
+      Assert.assertEquals("", PatientResponse.localizePatientIdentifierTypes(""));
     }
 }

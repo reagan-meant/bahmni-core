@@ -1,7 +1,10 @@
 package org.bahmni.module.bahmnicore.contract.drugorder;
 
 
+import java.util.Locale;
+
 import org.openmrs.Concept;
+import org.openmrs.ConceptName;
 import org.openmrs.api.context.Context;
 
 public class ConceptData {
@@ -12,8 +15,8 @@ public class ConceptData {
     }
 
     public ConceptData(Concept concept) {
-        if(concept != null){
-            this.name = concept.getName(Context.getLocale()).getName();
+        if(concept != null) {
+        	this.name = getName(concept, Context.getLocale());; 
         }
     }
 
@@ -31,5 +34,16 @@ public class ConceptData {
 
     public void setRootConcept(String rootConcept) {
         this.rootConcept = rootConcept;
+    }
+    
+    /**
+     * Guesses the name out of a concept.
+     * @param concept
+     * @param locale
+     */
+    public static String getName(Concept concept, Locale locale) {
+    	// Trying short name then preferred name
+    	ConceptName shortName = concept.getShortNameInLocale(locale);
+    	return (shortName == null) ? concept.getName(locale).getName() : shortName.getName();
     }
 }

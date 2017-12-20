@@ -10,7 +10,7 @@ import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 public class BaseIntegrationTest extends BaseModuleWebContextSensitiveTest {
 
 	/**
-	 * Asserts that two Json strings are the same.
+	 * Asserts that two Json strings represent the same object.
 	 * @param expectedJson The expected Json string.
 	 * @param actualJson The actual Json string.
 	 */

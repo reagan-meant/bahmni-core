@@ -221,16 +221,16 @@ public class PatientResponse {
      */
     public static String localizeAddressFieldValue(String addressFieldValue) {
     	try {
-			HashMap<String, String> map = new ObjectMapper().readValue(addressFieldValue, HashMap.class);
-			for (String addressField : map.keySet()) {
-				String addressValue = Context.getMessageSourceService().getMessage(map.get(addressField));
-				map.put(addressField, addressValue);
-			}
-			addressFieldValue = new ObjectMapper().writeValueAsString(map);
-		} catch (Exception e) {} 
+    		HashMap<String, String> map = new ObjectMapper().readValue(addressFieldValue, HashMap.class);
+    		for (String addressField : map.keySet()) {
+    			String addressValue = Context.getMessageSourceService().getMessage(map.get(addressField));
+    			map.put(addressField, addressValue);
+    		}
+    		addressFieldValue = new ObjectMapper().writeValueAsString(map);
+    	} catch (Exception e) {} 
     	return addressFieldValue;
     }
-    
+
     /**
      * Localizes the patient identifier types of the extra identifiers.
      * Eg. {"pit.id1" : "98765321", "pit.id2" : "MRS-1234"} -> {"Primary ID" : "98765321", "Secondary ID" : "MRS-1234"} 
@@ -240,14 +240,14 @@ public class PatientResponse {
      */
     public static String localizePatientIdentifierTypes(String extraIdentifiers) {
     	try {
-			HashMap<String, String> map = new ObjectMapper().readValue(extraIdentifiers, HashMap.class);
-			for (String pit : map.keySet()) {
-				String l10nPit = Context.getMessageSourceService().getMessage(pit);
-				if (!pit.equals(l10nPit)) {
-					extraIdentifiers = extraIdentifiers.replaceAll(pit, l10nPit);
-				}
-			}
-		} catch (Exception e) {} 
+    		HashMap<String, String> map = new ObjectMapper().readValue(extraIdentifiers, HashMap.class);
+    		for (String pit : map.keySet()) {
+    			String l10nPit = Context.getMessageSourceService().getMessage(pit);
+    			if (!pit.equals(l10nPit)) {
+    				extraIdentifiers = extraIdentifiers.replaceAll(pit, l10nPit);
+    			}
+    		}
+    	} catch (Exception e) {} 
     	return extraIdentifiers;
     }
 }

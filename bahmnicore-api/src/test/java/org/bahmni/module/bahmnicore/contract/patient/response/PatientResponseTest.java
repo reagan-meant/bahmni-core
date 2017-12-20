@@ -45,7 +45,7 @@ public class PatientResponseTest {
     }
     
     @Test
-    public void shouldPatientIdentifierTypes() {
+    public void shouldLocalizePatientIdentifierTypes() {
       Assert.assertEquals("{\"Identifiant primaire\" : \"98765321\", \"Identifiant secondaire\" : \"MRS-1234\", \"pit.id3\" : \"foobar_666777\"}", PatientResponse.localizePatientIdentifierTypes("{\"pit.id1\" : \"98765321\", \"pit.id2\" : \"MRS-1234\", \"pit.id3\" : \"foobar_666777\"}"));
       Assert.assertEquals("{\"malformed\"_;\"json", PatientResponse.localizePatientIdentifierTypes("{\"malformed\"_;\"json"));
       Assert.assertEquals(null, PatientResponse.localizePatientIdentifierTypes(null));

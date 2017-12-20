@@ -9,7 +9,7 @@ public interface Internationalizer {
 
 	/**
 	 * Tells whether i18n support is enabled for metadata.
-	 * This helps skips the use of the internationalizer altogether when it is marked as disabled.
+	 * This helps skip the use of the internationalizer altogether when it is marked as disabled.
 	 */
 	public boolean isEnabled();
 	

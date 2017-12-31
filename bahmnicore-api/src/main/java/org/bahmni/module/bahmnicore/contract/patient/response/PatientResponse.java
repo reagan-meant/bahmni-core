@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Component;
 
 public class PatientResponse {
 
+	private static Log log = LogFactory.getLog(PatientResponse.class);
+	
     private String uuid;
     private Date birthDate;
     private String extraIdentifiers;
@@ -227,7 +231,9 @@ public class PatientResponse {
     			map.put(addressField, addressValue);
     		}
     		addressFieldValue = new ObjectMapper().writeValueAsString(map);
-    	} catch (Exception e) {} 
+    	} catch (Exception e) {
+    		log.warn("There was an error while localizing the address field Json in the patient response: \n" + addressFieldValue, e);
+    	} 
     	return addressFieldValue;
     }
 
@@ -247,7 +253,9 @@ public class PatientResponse {
     				extraIdentifiers = extraIdentifiers.replaceAll(pit, l10nPit);
     			}
     		}
-    	} catch (Exception e) {} 
+    	} catch (Exception e) {
+    		log.warn("There was an error while localizing the extra identifiers Json in the patient response: \n" + extraIdentifiers, e);
+    	} 
     	return extraIdentifiers;
     }
 }

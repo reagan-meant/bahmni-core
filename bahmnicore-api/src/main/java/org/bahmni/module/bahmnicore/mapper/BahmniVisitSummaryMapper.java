@@ -1,19 +1,21 @@
 package org.bahmni.module.bahmnicore.mapper;
 
+import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.bahmni.module.bahmnicore.contract.visit.VisitSummary;
 import org.openmrs.Encounter;
 import org.openmrs.Visit;
-
-import java.util.List;
+import org.openmrs.api.context.Context;
 
 public class BahmniVisitSummaryMapper {
+	
     public VisitSummary map(Visit visit, List<Encounter> admissionAndDischargeEncounters) {
         VisitSummary visitSummary = new VisitSummary();
         visitSummary.setUuid(visit.getUuid());
         visitSummary.setStartDateTime(visit.getStartDatetime());
         visitSummary.setStopDateTime(visit.getStopDatetime());
-        visitSummary.setVisitType(visit.getVisitType().getName());
+        visitSummary.setVisitType( Context.getMessageSourceService().getMessage(visit.getVisitType().getName()) );
         mapAdmissionAndDischargeDetails(admissionAndDischargeEncounters, visitSummary);
 
         return visitSummary;

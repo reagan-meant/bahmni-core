@@ -5,7 +5,7 @@
     <parent>
         <artifactId>bahmni</artifactId>
         <groupId>org.bahmni.module</groupId>
-        <version>0.93-SNAPSHOT</version>
+        <version>0.93-1.0.0</version>
     </parent>
 
     <artifactId>admin</artifactId>
@@ -238,7 +238,7 @@
                 <filtering>true</filtering>
             </testResource>
         </testResources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>
